@@ -18,22 +18,22 @@ RUN chown -R evilonion:evilonion .ssh/
 WORKDIR /home/evilonion/.ssh
 RUN chmod 600 authorized_keys
 
-#etc/ssh/sshd_confidd
-#/home/evilonion# chown -R evilonion:evilonion .ssh/
-#etc/ssh/sshd_config
-#/home/evilonion# cd .ssh/
-#/home/evilonion/.ssh# chmod 600 authorized_keys
+#WEB
+COPY /srcs/index.html /usr/share/nginx/html/
+
+#TOR
+COPY /srcs/torrc /etc/tor/
 
 #Externo
 ###ssh evilonion@localhost -p 4242
 ### vim ~/.ssh/known_hosts
-
+### cat /var/lib/tor/hidden_service/hostname
 #CMD
 
 EXPOSE 80:80 4242:4242 
 
 #INIT
-CMD service nginx start && service ssh start && bash
+CMD service nginx start && service ssh start && service tor start && bash
 
 
 #ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVocBwOWla48qdz5SxfL0Vb5gJsRTn+O5d3Rc1DLuvn evila-ro@student.42madrid.com
@@ -52,18 +52,4 @@ CMD service nginx start && service ssh start && bash
 #• No deberás abrir ningún puerto ni establecer reglas de firewall.
 
 #evilonion:onionevil
-
-#etc/ssh/sshd_config #
-#adduser evilonion
-#.ssh/authorized_keys
-#evilonion:onionevil -y
-#cd /home/evilonion/
-#/home/evilonion# mkdir .ssh
-#vim .ssh/authorized_keys
-#/home/evilonion# service ssh start
-#etc/ssh/sshd_config
-#/home/evilonion# chown -R evilonion:evilonion .ssh/
-#etc/ssh/sshd_config
-#/home/evilonion# cd .ssh/
-#/home/evilonion/.ssh# chmod 600 authorized_keys
 
